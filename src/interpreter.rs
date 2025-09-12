@@ -1,5 +1,8 @@
 use std::{fs::{read_to_string, File}, io::BufReader, path::PathBuf};
-// pub mod interpreter;
+
+mod tokenizer;
+use tokenizer::Tokenizer;
+
 
 fn open_file(filepath: &PathBuf) -> Result<BufReader<File>, std::io::Error> {
     let file = File::open(filepath)?;
@@ -25,4 +28,5 @@ pub fn binary_template(template_path: PathBuf, file_path: PathBuf) {
         });
 
     println!("{}", template);
+    let tokenizer = Tokenizer::new(template);
 }
