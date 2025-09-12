@@ -7,7 +7,6 @@ use clap::Parser;
 //#[command(propagate_version = true)]
 struct Cli {
     template: PathBuf,
-    
     file: PathBuf,
 }
 
