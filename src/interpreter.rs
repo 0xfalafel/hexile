@@ -26,5 +26,9 @@ pub fn binary_template(template_path: PathBuf, file_path: PathBuf) {
         });
 
     println!("{}", template);
-    let tokenizer = Tokenizer::new(template);
+    let mut tokenizer = Tokenizer::new(template);
+
+    let token1 = tokenizer.get_next_token();
+
+    println!("first token : {:?}", token1);
 }

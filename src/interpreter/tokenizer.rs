@@ -1,4 +1,10 @@
-enum Token {
+#[derive(Debug, Eq, PartialEq)]
+pub enum TokenizerError {
+    InvalidSyntax,
+}
+
+#[derive(Debug, Eq, PartialEq)]
+pub enum Token {
     Integer,
     Char,
     Variable(String),
@@ -60,16 +66,27 @@ impl Tokenizer {
 
 
     /// This method is responsible for breaking a sentence appart into tokens
-    pub fn get_next_token(&mut self) -> Result<Token, Error> {
+    pub fn get_next_token(&mut self) -> Result<Token, TokenizerError> {
         
         self.skip_whitespace();
 
         let char = match self.get_char() {
-            None => return Token::EOF,
+            None => return Ok(Token::EOF),
             Some(char) => char,
         };
 
-        
+        match char {
+            c if c.is_ascii() => {
+                let string = self.get_string();
+
+                let token = match string.as_str() {
+                    "int" => Token::Integer,
+                    _ => Token::Variable(string)
+                };
+                return Ok(token)
+            },
+            _ => Err(TokenizerError::InvalidSyntax)
+        }
     }
 
 }
