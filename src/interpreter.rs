@@ -11,8 +11,6 @@ fn open_file(filepath: &PathBuf) -> Result<BufReader<File>, std::io::Error> {
 }
 
 pub fn binary_template(template_path: PathBuf, file_path: PathBuf) {
-    println!("Hi mom!");
-
     let template = match read_to_string(&template_path) {
         Err(_) => {
             eprintln!("Failed to open {}", &template_path.display());
