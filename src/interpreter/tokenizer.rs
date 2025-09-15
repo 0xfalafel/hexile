@@ -40,6 +40,25 @@ impl Tokenizer {
         }
     }
 
+    /// Read a string
+    fn get_string(&mut self) -> String {
+        let str_start = self.pos;
+        let input_chars: Vec<char> = self.text.chars().skip(self.pos).collect();
+    
+        let end_of_variable = input_chars.iter().position(|&c| {
+            c.is_whitespace() || c == '=' || c == '[' || c == ']' || c == '+' || c == '-'
+            || c == '*' || c == '/' || c == ':'  || c == '(' || c == ')'
+        });
+    
+        let end = end_of_variable.unwrap_or(input_chars.len());
+        self.pos = str_start + end;
+    
+        // Collect the characters up to the end index
+        let new_var: String = input_chars.into_iter().take(end).collect();
+        new_var
+    }
+
+
     /// This method is responsible for breaking a sentence appart into tokens
     pub fn get_next_token(&mut self) -> Result<Token, Error> {
         
@@ -49,6 +68,8 @@ impl Tokenizer {
             None => return Token::EOF,
             Some(char) => char,
         };
+
+        
     }
 
 }
