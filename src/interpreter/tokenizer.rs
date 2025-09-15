@@ -52,7 +52,7 @@ impl Tokenizer {
         let input_chars: Vec<char> = self.text.chars().skip(self.pos).collect();
     
         let end_of_variable = input_chars.iter().position(|&c| {
-            c.is_whitespace() || c == '=' || c == '[' || c == ']' || c == '+' || c == '-'
+            c.is_whitespace() || c == ';' || c == '=' || c == '[' || c == ']' || c == '+' || c == '-'
             || c == '*' || c == '/' || c == ':'  || c == '(' || c == ')'
         });
     
