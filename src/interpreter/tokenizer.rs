@@ -8,7 +8,8 @@ pub enum Token {
     Integer,
     Char,
     Variable(String),
-    EOF,
+    EOL, // end of line
+    EOF, // end of file
 }
 
 #[derive(Debug, Clone)]
@@ -75,18 +76,19 @@ impl Tokenizer {
             Some(char) => char,
         };
 
-        match char {
+        let token = match char {
+            ';' => Token::EOL,
             c if c.is_ascii() => {
                 let string = self.get_string();
 
-                let token = match string.as_str() {
+                match string.as_str() {
                     "int" => Token::Integer,
                     _ => Token::Variable(string)
-                };
-                return Ok(token)
+                }
             },
-            _ => Err(TokenizerError::InvalidSyntax)
-        }
+            _ => return Err(TokenizerError::InvalidSyntax)
+        };
+        Ok(token)
     }
 
 }
